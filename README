@@ -1,0 +1,35 @@
+########################## Part 1: original.c #################################
+
+This term project for a graduate class in microprocessor system design called
+for a small program in Verilog, C, or C++ to simulate (not synthesize) the 
+behavior of a write-allocate, MESI protocol, four-way set associative L2 cache
+with 4K lines of 64 bytes data each. 
+
+Our C program was tested by running a text file containing lines of the type
+n address
+where 'n' could be 0-9 and indicated the desired operation type
+  and 'address' was some 32-bit address.
+
+Our demo program was successful for all tests except ensuring cache coherency.
+We designed the algorithm for each operation, designed testcase files (see the 
+testcases folder) to verify each algorithm, chose a multidimensional array for
+the L2 cache itself, and implemented this all in C code. 
+
+Team Members: Jen Hanni, Sai Prasanth, Brian Rho
+
+The final file submitted to the professor and used for the project demo can be
+found in original.c in this repo.
+
+########################## Part 2: extensibility ##############################
+
+I felt that the quality of the code, especially after last-minute fixes, could
+be improved. I also wanted to improve extensibility so that it would take less
+than fifteen minutes to change the size (number of lines) or set associativity
+(direct-mapped, fully associative).
+
+I have permission from my teammates to take this code, improve on it, and make
+it available at http://github.com/wicker/l2cache/
+
+Author: Jen Hanni (wicker)
+
+

@@ -1,0 +1,133 @@
+-----------------------------------------------------------------------------------------------------
+Reference: 1
+data from address 1 in DRAM successfully loaded into index 0 in way 0
+lower 32 bytes of tag 0 at index 0 from way 0 successfully written to the L1 cache
+
+tag 0 stored in index 0 at way 0
+n address    hitCount missCount LRU: way0  way1 way2 way3 MESI  readCount writeCount hitRatio
+0 0x1        0        1               3     0    1    2    1    1         0           0.000000
+--------------------------------------------------------------------------------------------------
+Reference: 2
+data from address 10000c in DRAM successfully loaded into index 0 in way 1
+lower 32 bytes of tag 1 at index 0 from way 1 successfully written to the L1 cache
+
+tag 1 stored in index 0 at way 1
+n address    hitCount missCount LRU: way0  way1 way2 way3 MESI  readCount writeCount hitRatio
+0 0x10000c   0        2               2     3    0    1    1    2         0           0.000000
+--------------------------------------------------------------------------------------------------
+Reference: 3
+data from address 20000b in DRAM successfully loaded into index 0 in way 2
+lower 32 bytes of tag 2 at index 0 from way 2 successfully written to the L1 cache
+
+tag 2 stored in index 0 at way 2
+n address    hitCount missCount LRU: way0  way1 way2 way3 MESI  readCount writeCount hitRatio
+0 0x20000b   0        3               1     2    3    0    1    3         0           0.000000
+--------------------------------------------------------------------------------------------------
+Reference: 4
+data from address 300008 in DRAM successfully loaded into index 0 in way 3
+lower 32 bytes of tag 3 at index 0 from way 3 successfully written to the L1 cache
+
+tag 3 stored in index 0 at way 3
+n address    hitCount missCount LRU: way0  way1 way2 way3 MESI  readCount writeCount hitRatio
+0 0x300008   0        4               0     1    2    3    1    4         0           0.000000
+--------------------------------------------------------------------------------------------------
+Reference: 5
+data from address 60 in DRAM successfully loaded into index 1 in way 0
+upper 32 bytes of tag 0 at index 1 from way 0 successfully written to the L1 cache
+
+tag 0 stored in index 1 at way 0
+n address    hitCount missCount LRU: way0  way1 way2 way3 MESI  readCount writeCount hitRatio
+0 0x60       0        5               3     0    1    2    1    5         0           0.000000
+--------------------------------------------------------------------------------------------------
+Reference: 6
+data from address 10006a in DRAM successfully loaded into index 1 in way 1
+upper 32 bytes of tag 1 at index 1 from way 1 successfully written to the L1 cache
+
+tag 1 stored in index 1 at way 1
+n address    hitCount missCount LRU: way0  way1 way2 way3 MESI  readCount writeCount hitRatio
+0 0x10006a   0        6               2     3    0    1    1    6         0           0.000000
+--------------------------------------------------------------------------------------------------
+Reference: 7
+data from address 200062 in DRAM successfully loaded into index 1 in way 2
+upper 32 bytes of tag 2 at index 1 from way 2 successfully written to the L1 cache
+
+tag 2 stored in index 1 at way 2
+n address    hitCount missCount LRU: way0  way1 way2 way3 MESI  readCount writeCount hitRatio
+0 0x200062   0        7               1     2    3    0    1    7         0           0.000000
+--------------------------------------------------------------------------------------------------
+Reference: 8
+data from address 300066 in DRAM successfully loaded into index 1 in way 3
+upper 32 bytes of tag 3 at index 1 from way 3 successfully written to the L1 cache
+
+tag 3 stored in index 1 at way 3
+n address    hitCount missCount LRU: way0  way1 way2 way3 MESI  readCount writeCount hitRatio
+0 0x300066   0        8               0     1    2    3    1    8         0           0.000000
+--------------------------------------------------------------------------------------------------
+Reference: 9
+data from address 400007 in DRAM successfully loaded into index 0 in way 0
+lower 32 bytes of tag 4 at index 0 from way 0 successfully written to the L1 cache
+
+tag 4 stored in index 0 at way 0
+n address    hitCount missCount LRU: way0  way1 way2 way3 MESI  readCount writeCount hitRatio
+0 0x400007   0        9               3     0    1    2    1    9         0           0.000000
+--------------------------------------------------------------------------------------------------
+Reference: 10
+data from address 500004 in DRAM successfully loaded into index 0 in way 1
+lower 32 bytes of tag 5 at index 0 from way 1 successfully written to the L1 cache
+
+tag 5 stored in index 0 at way 1
+n address    hitCount missCount LRU: way0  way1 way2 way3 MESI  readCount writeCount hitRatio
+0 0x500004   0        10              2     3    0    1    1    10        0           0.000000
+--------------------------------------------------------------------------------------------------
+Reference: 11
+lower 32 bytes of tag 2 at index 0 from way 2 successfully written to the L1 cache
+
+tag 2 stored in index 0 at way 2
+n address    hitCount missCount LRU: way0  way1 way2 way3 MESI  readCount writeCount hitRatio
+0 0x200000   1        10              1     2    3    0    1    11        0           0.090909
+--------------------------------------------------------------------------------------------------
+Reference: 12
+data from address 100000 in DRAM successfully loaded into index 0 in way 3
+lower 32 bytes of tag 1 at index 0 from way 3 successfully written to the L1 cache
+
+tag 1 stored in index 0 at way 3
+n address    hitCount missCount LRU: way0  way1 way2 way3 MESI  readCount writeCount hitRatio
+0 0x100000   1        11              0     1    2    3    1    12        0           0.083333
+--------------------------------------------------------------------------------------------------
+Reference: 13
+lower 32 bytes of tag 4 at index 0 from way 0 successfully written to the L1 cache
+
+tag 4 stored in index 0 at way 0
+n address    hitCount missCount LRU: way0  way1 way2 way3 MESI  readCount writeCount hitRatio
+0 0x400000   2        11              3     0    1    2    1    13        0           0.153846
+--------------------------------------------------------------------------------------------------
+Reference: 14
+data from address 800040 in DRAM successfully loaded into index 1 in way 0
+lower 32 bytes of tag 8 at index 1 from way 0 successfully written to the L1 cache
+
+tag 8 stored in index 1 at way 0
+n address    hitCount missCount LRU: way0  way1 way2 way3 MESI  readCount writeCount hitRatio
+0 0x800040   2        12              3     0    1    2    1    14        0           0.142857
+--------------------------------------------------------------------------------------------------
+Reference: 15
+lower 32 bytes of tag 2 at index 1 from way 2 successfully written to the L1 cache
+
+tag 2 stored in index 1 at way 2
+n address    hitCount missCount LRU: way0  way1 way2 way3 MESI  readCount writeCount hitRatio
+0 0x200040   3        12              2     0    3    1    1    15        0           0.200000
+--------------------------------------------------------------------------------------------------
+Reference: 16
+data from address 900040 in DRAM successfully loaded into index 1 in way 1
+lower 32 bytes of tag 9 at index 1 from way 1 successfully written to the L1 cache
+
+tag 9 stored in index 1 at way 1
+n address    hitCount missCount LRU: way0  way1 way2 way3 MESI  readCount writeCount hitRatio
+0 0x900040   3        13              1     3    2    0    1    16        0           0.187500
+--------------------------------------------------------------------------------------------------
+Reference: 17
+lower 32 bytes of tag 3 at index 1 from way 3 successfully written to the L1 cache
+
+tag 3 stored in index 1 at way 3
+n address    hitCount missCount LRU: way0  way1 way2 way3 MESI  readCount writeCount hitRatio
+0 0x300040   4        13              0     2    1    3    1    17        0           0.235294
+--------------------------------------------------------------------------------------------------

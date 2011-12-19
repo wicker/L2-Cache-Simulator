@@ -1,0 +1,713 @@
+-----------------------------------------------------------------------------------------------------
+Reference: 1
+data from address 0 in DRAM successfully loaded into index 0 in way 0
+lower 32 bytes of tag 0 at index 0 from way 0 successfully written to the L1 cache
+
+tag 0 stored in index 0 at way 0
+n address    hitCount missCount LRU: way0  way1 way2 way3 MESI  readCount writeCount hitRatio
+0 0x0        0        1               3     0    1    2    1    1         0           0.000000
+--------------------------------------------------------------------------------------------------
+Reference: 2
+data from address 100000 in DRAM successfully loaded into index 0 in way 1
+lower 32 bytes of tag 1 at index 0 from way 1 successfully written to the L1 cache
+
+tag 1 stored in index 0 at way 1
+n address    hitCount missCount LRU: way0  way1 way2 way3 MESI  readCount writeCount hitRatio
+0 0x100000   0        2               2     3    0    1    1    2         0           0.000000
+--------------------------------------------------------------------------------------------------
+Reference: 3
+data from address 200000 in DRAM successfully loaded into index 0 in way 2
+lower 32 bytes of tag 2 at index 0 from way 2 successfully written to the L1 cache
+
+tag 2 stored in index 0 at way 2
+n address    hitCount missCount LRU: way0  way1 way2 way3 MESI  readCount writeCount hitRatio
+0 0x200000   0        3               1     2    3    0    1    3         0           0.000000
+--------------------------------------------------------------------------------------------------
+Reference: 4
+data from address 300000 in DRAM successfully loaded into index 0 in way 3
+lower 32 bytes of tag 3 at index 0 from way 3 successfully written to the L1 cache
+
+tag 3 stored in index 0 at way 3
+n address    hitCount missCount LRU: way0  way1 way2 way3 MESI  readCount writeCount hitRatio
+0 0x300000   0        4               0     1    2    3    1    4         0           0.000000
+--------------------------------------------------------------------------------------------------
+Reference: 5
+lower 32 bytes of tag 1 at index 0 from way 1 successfully written to the L1 cache
+
+tag 1 stored in index 0 at way 1
+n address    hitCount missCount LRU: way0  way1 way2 way3 MESI  readCount writeCount hitRatio
+0 0x100000   1        4               0     3    1    2    1    5         0           0.200000
+--------------------------------------------------------------------------------------------------
+Reference: 6
+lower 32 bytes of tag 3 at index 0 from way 3 successfully written to the L1 cache
+
+tag 3 stored in index 0 at way 3
+n address    hitCount missCount LRU: way0  way1 way2 way3 MESI  readCount writeCount hitRatio
+0 0x300000   2        4               0     2    1    3    1    6         0           0.333333
+--------------------------------------------------------------------------------------------------
+Reference: 7
+data from address 200000 writing to DRAM
+
+tag 2 stored in index 0 at way 2
+n address    hitCount missCount LRU: way0  way1 way2 way3 MESI  readCount writeCount hitRatio
+1 0x200000   3        4               0     1    3    2    1    6         1           0.428571
+--------------------------------------------------------------------------------------------------
+Reference: 8
+
+tag 1 stored in index 0 at way 1
+n address    hitCount missCount LRU: way0  way1 way2 way3 MESI  readCount writeCount hitRatio
+3 0x100000   4        4               0     1    3    2    3    6         1           0.500000
+--------------------------------------------------------------------------------------------------
+Reference: 9
+data from address 0 writing to DRAM
+
+tag 0 stored in index 0 at way 0
+n address    hitCount missCount LRU: way0  way1 way2 way3 MESI  readCount writeCount hitRatio
+1 0x0        5        4               3     0    2    1    1    6         2           0.555556
+--------------------------------------------------------------------------------------------------
+Reference: 10
+lower 32 bytes of tag 0 at index 0 from way 0 successfully written to the L1 cache
+
+tag 0 stored in index 0 at way 0
+n address    hitCount missCount LRU: way0  way1 way2 way3 MESI  readCount writeCount hitRatio
+0 0x0        6        4               3     0    2    1    1    7         2           0.600000
+--------------------------------------------------------------------------------------------------
+Reference: 11
+data writing from address 0 to snooped other processor
+lower 32 bytes of tag 0 at index 0 from way 0 successfully written to the L1 cache
+
+tag 0 stored in index 0 at way 0
+n address    hitCount missCount LRU: way0  way1 way2 way3 MESI  readCount writeCount hitRatio
+4 0x0        7        4               3     0    2    1    2    8         2           0.636364
+--------------------------------------------------------------------------------------------------
+Reference: 12
+
+tag 2 stored in index 0 at way 2
+n address    hitCount missCount LRU: way0  way1 way2 way3 MESI  readCount writeCount hitRatio
+5 0x200000   8        4               3     0    2    1    3    8         3           0.666667
+--------------------------------------------------------------------------------------------------
+Reference: 13
+data from address 100000 in DRAM successfully loaded into index 0 in way 1
+lower 32 bytes of tag 1 at index 0 from way 1 successfully written to the L1 cache
+
+tag 1 stored in index 0 at way 1
+n address    hitCount missCount LRU: way0  way1 way2 way3 MESI  readCount writeCount hitRatio
+0 0x100000   8        5               2     3    1    0    1    9         3           0.615385
+--------------------------------------------------------------------------------------------------
+Reference: 14
+data from address 800 in DRAM successfully loaded into index 32 in way 0
+lower 32 bytes of tag 0 at index 32 from way 0 successfully written to the L1 cache
+
+tag 0 stored in index 32 at way 0
+n address    hitCount missCount LRU: way0  way1 way2 way3 MESI  readCount writeCount hitRatio
+0 0x800      8        6               3     0    1    2    1    10        3           0.571429
+--------------------------------------------------------------------------------------------------
+Reference: 15
+data from address 100800 in DRAM successfully loaded into index 32 in way 1
+lower 32 bytes of tag 1 at index 32 from way 1 successfully written to the L1 cache
+
+tag 1 stored in index 32 at way 1
+n address    hitCount missCount LRU: way0  way1 way2 way3 MESI  readCount writeCount hitRatio
+0 0x100800   8        7               2     3    0    1    1    11        3           0.533333
+--------------------------------------------------------------------------------------------------
+Reference: 16
+data from address 200800 in DRAM successfully loaded into index 32 in way 2
+lower 32 bytes of tag 2 at index 32 from way 2 successfully written to the L1 cache
+
+tag 2 stored in index 32 at way 2
+n address    hitCount missCount LRU: way0  way1 way2 way3 MESI  readCount writeCount hitRatio
+0 0x200800   8        8               1     2    3    0    1    12        3           0.500000
+--------------------------------------------------------------------------------------------------
+Reference: 17
+data from address 300800 in DRAM successfully loaded into index 32 in way 3
+lower 32 bytes of tag 3 at index 32 from way 3 successfully written to the L1 cache
+
+tag 3 stored in index 32 at way 3
+n address    hitCount missCount LRU: way0  way1 way2 way3 MESI  readCount writeCount hitRatio
+0 0x300800   8        9               0     1    2    3    1    13        3           0.470588
+--------------------------------------------------------------------------------------------------
+Reference: 18
+lower 32 bytes of tag 1 at index 32 from way 1 successfully written to the L1 cache
+
+tag 1 stored in index 32 at way 1
+n address    hitCount missCount LRU: way0  way1 way2 way3 MESI  readCount writeCount hitRatio
+0 0x100800   9        9               0     3    1    2    1    14        3           0.500000
+--------------------------------------------------------------------------------------------------
+Reference: 19
+lower 32 bytes of tag 3 at index 32 from way 3 successfully written to the L1 cache
+
+tag 3 stored in index 32 at way 3
+n address    hitCount missCount LRU: way0  way1 way2 way3 MESI  readCount writeCount hitRatio
+0 0x300800   10       9               0     2    1    3    1    15        3           0.526316
+--------------------------------------------------------------------------------------------------
+Reference: 20
+data from address 200800 writing to DRAM
+
+tag 2 stored in index 32 at way 2
+n address    hitCount missCount LRU: way0  way1 way2 way3 MESI  readCount writeCount hitRatio
+1 0x200800   11       9               0     1    3    2    1    15        4           0.550000
+--------------------------------------------------------------------------------------------------
+Reference: 21
+
+tag 1 stored in index 32 at way 1
+n address    hitCount missCount LRU: way0  way1 way2 way3 MESI  readCount writeCount hitRatio
+3 0x100800   12       9               0     1    3    2    3    15        4           0.571429
+--------------------------------------------------------------------------------------------------
+Reference: 22
+data from address 800 writing to DRAM
+
+tag 0 stored in index 32 at way 0
+n address    hitCount missCount LRU: way0  way1 way2 way3 MESI  readCount writeCount hitRatio
+1 0x800      13       9               3     0    2    1    1    15        5           0.590909
+--------------------------------------------------------------------------------------------------
+Reference: 23
+lower 32 bytes of tag 0 at index 32 from way 0 successfully written to the L1 cache
+
+tag 0 stored in index 32 at way 0
+n address    hitCount missCount LRU: way0  way1 way2 way3 MESI  readCount writeCount hitRatio
+0 0x800      14       9               3     0    2    1    1    16        5           0.608696
+--------------------------------------------------------------------------------------------------
+Reference: 24
+data writing from address 800 to snooped other processor
+lower 32 bytes of tag 0 at index 32 from way 0 successfully written to the L1 cache
+
+tag 0 stored in index 32 at way 0
+n address    hitCount missCount LRU: way0  way1 way2 way3 MESI  readCount writeCount hitRatio
+4 0x800      15       9               3     0    2    1    2    17        5           0.625000
+--------------------------------------------------------------------------------------------------
+Reference: 25
+
+tag 2 stored in index 32 at way 2
+n address    hitCount missCount LRU: way0  way1 way2 way3 MESI  readCount writeCount hitRatio
+5 0x200800   16       9               3     0    2    1    3    17        6           0.640000
+--------------------------------------------------------------------------------------------------
+Reference: 26
+data from address 100800 in DRAM successfully loaded into index 32 in way 1
+lower 32 bytes of tag 1 at index 32 from way 1 successfully written to the L1 cache
+
+tag 1 stored in index 32 at way 1
+n address    hitCount missCount LRU: way0  way1 way2 way3 MESI  readCount writeCount hitRatio
+0 0x100800   16       10              2     3    1    0    1    18        6           0.615385
+--------------------------------------------------------------------------------------------------
+Reference: 27
+lower 32 bytes of tag 3 at index 32 from way 3 successfully written to the L1 cache
+
+tag 3 stored in index 32 at way 3
+n address    hitCount missCount LRU: way0  way1 way2 way3 MESI  readCount writeCount hitRatio
+0 0x300800   17       10              1     2    0    3    1    19        6           0.629630
+--------------------------------------------------------------------------------------------------
+Reference: 28
+data from address 800 writing to DRAM
+
+tag 0 stored in index 32 at way 0
+n address    hitCount missCount LRU: way0  way1 way2 way3 MESI  readCount writeCount hitRatio
+1 0x800      18       10              3     1    0    2    1    19        7           0.642857
+--------------------------------------------------------------------------------------------------
+Reference: 29
+data writing from address 800 to snooped other processor
+lower 32 bytes of tag 0 at index 32 from way 0 successfully written to the L1 cache
+
+tag 0 stored in index 32 at way 0
+n address    hitCount missCount LRU: way0  way1 way2 way3 MESI  readCount writeCount hitRatio
+4 0x800      19       10              3     1    0    2    2    20        7           0.655172
+--------------------------------------------------------------------------------------------------
+Reference: 30
+data from address 800 writing to DRAM
+
+tag 0 stored in index 32 at way 0
+n address    hitCount missCount LRU: way0  way1 way2 way3 MESI  readCount writeCount hitRatio
+1 0x800      20       10              3     1    0    2    1    20        8           0.666667
+--------------------------------------------------------------------------------------------------
+Reference: 31
+lower 32 bytes of tag 0 at index 32 from way 0 successfully written to the L1 cache
+
+tag 0 stored in index 32 at way 0
+n address    hitCount missCount LRU: way0  way1 way2 way3 MESI  readCount writeCount hitRatio
+0 0x800      21       10              3     1    0    2    1    21        8           0.677419
+--------------------------------------------------------------------------------------------------
+Reference: 32
+data writing from address 800 to snooped other processor
+lower 32 bytes of tag 0 at index 32 from way 0 successfully written to the L1 cache
+
+tag 0 stored in index 32 at way 0
+n address    hitCount missCount LRU: way0  way1 way2 way3 MESI  readCount writeCount hitRatio
+4 0x800      22       10              3     1    0    2    2    22        8           0.687500
+--------------------------------------------------------------------------------------------------
+Reference: 33
+lower 32 bytes of tag 0 at index 32 from way 0 successfully written to the L1 cache
+
+tag 0 stored in index 32 at way 0
+n address    hitCount missCount LRU: way0  way1 way2 way3 MESI  readCount writeCount hitRatio
+0 0x800      23       10              3     1    0    2    2    23        8           0.696970
+--------------------------------------------------------------------------------------------------
+Reference: 34
+
+tag 0 stored in index 32 at way 0
+n address    hitCount missCount LRU: way0  way1 way2 way3 MESI  readCount writeCount hitRatio
+3 0x800      24       10              3     1    0    2    3    23        8           0.705882
+--------------------------------------------------------------------------------------------------
+Reference: 35
+data from L1 was successfully written to index 32 at way 0 in lower 32 bytes of L2 cache
+data from address 800 writing to DRAM
+
+tag 0 stored in index 32 at way 0
+n address    hitCount missCount LRU: way0  way1 way2 way3 MESI  readCount writeCount hitRatio
+1 0x800      24       11              3     1    0    2    1    23        9           0.685714
+--------------------------------------------------------------------------------------------------
+Reference: 36
+data writing from address 800 to snooped other processor
+lower 32 bytes of tag 0 at index 32 from way 0 successfully written to the L1 cache
+
+tag 0 stored in index 32 at way 0
+n address    hitCount missCount LRU: way0  way1 way2 way3 MESI  readCount writeCount hitRatio
+4 0x800      25       11              3     1    0    2    2    24        9           0.694444
+--------------------------------------------------------------------------------------------------
+Reference: 37
+lower 32 bytes of tag 0 at index 32 from way 0 successfully written to the L1 cache
+
+tag 0 stored in index 32 at way 0
+n address    hitCount missCount LRU: way0  way1 way2 way3 MESI  readCount writeCount hitRatio
+0 0x800      26       11              3     1    0    2    2    25        9           0.702703
+--------------------------------------------------------------------------------------------------
+Reference: 38
+data from address 800 writing to DRAM
+
+tag 0 stored in index 32 at way 0
+n address    hitCount missCount LRU: way0  way1 way2 way3 MESI  readCount writeCount hitRatio
+1 0x800      27       11              3     1    0    2    1    25        10          0.710526
+--------------------------------------------------------------------------------------------------
+Reference: 39
+data writing from address 800 to snooped other processor
+lower 32 bytes of tag 0 at index 32 from way 0 successfully written to the L1 cache
+
+tag 0 stored in index 32 at way 0
+n address    hitCount missCount LRU: way0  way1 way2 way3 MESI  readCount writeCount hitRatio
+4 0x800      28       11              3     1    0    2    2    26        10          0.717949
+--------------------------------------------------------------------------------------------------
+Reference: 40
+data writing from address 800 to snooped other processor
+lower 32 bytes of tag 0 at index 32 from way 0 successfully written to the L1 cache
+
+tag 0 stored in index 32 at way 0
+n address    hitCount missCount LRU: way0  way1 way2 way3 MESI  readCount writeCount hitRatio
+4 0x800      29       11              3     1    0    2    2    27        10          0.725000
+--------------------------------------------------------------------------------------------------
+Reference: 41
+data writing from address 800 to snooped other processor
+line 800 has MESI bits set to 0 in L1 cache
+
+tag 0 stored in index 32 at way 0
+n address    hitCount missCount LRU: way0  way1 way2 way3 MESI  readCount writeCount hitRatio
+6 0x800      30       11              3     1    0    2    3    28        10          0.731707
+--------------------------------------------------------------------------------------------------
+Reference: 42
+data from address 800 in DRAM successfully loaded into index 32 in way 0
+lower 32 bytes of tag 0 at index 32 from way 0 successfully written to the L1 cache
+
+tag 0 stored in index 32 at way 0
+n address    hitCount missCount LRU: way0  way1 way2 way3 MESI  readCount writeCount hitRatio
+0 0x800      30       12              3     1    0    2    1    29        10          0.714286
+--------------------------------------------------------------------------------------------------
+Reference: 43
+data writing from address 800 to snooped other processor
+line 800 has MESI bits set to 0 in L1 cache
+
+tag 0 stored in index 32 at way 0
+n address    hitCount missCount LRU: way0  way1 way2 way3 MESI  readCount writeCount hitRatio
+6 0x800      31       12              3     1    0    2    3    30        10          0.720930
+--------------------------------------------------------------------------------------------------
+Reference: 44
+data from address 800 in DRAM successfully loaded into index 32 in way 0
+lower 32 bytes of tag 0 at index 32 from way 0 successfully written to the L1 cache
+
+tag 0 stored in index 32 at way 0
+n address    hitCount missCount LRU: way0  way1 way2 way3 MESI  readCount writeCount hitRatio
+0 0x800      31       13              3     1    0    2    1    31        10          0.704545
+--------------------------------------------------------------------------------------------------
+Reference: 45
+data writing from address 800 to snooped other processor
+lower 32 bytes of tag 0 at index 32 from way 0 successfully written to the L1 cache
+
+tag 0 stored in index 32 at way 0
+n address    hitCount missCount LRU: way0  way1 way2 way3 MESI  readCount writeCount hitRatio
+4 0x800      32       13              3     1    0    2    2    32        10          0.711111
+--------------------------------------------------------------------------------------------------
+Reference: 46
+data writing from address 800 to snooped other processor
+line 800 has MESI bits set to 0 in L1 cache
+
+tag 0 stored in index 32 at way 0
+n address    hitCount missCount LRU: way0  way1 way2 way3 MESI  readCount writeCount hitRatio
+6 0x800      33       13              3     1    0    2    3    33        10          0.717391
+--------------------------------------------------------------------------------------------------
+Reference: 47
+
+tag 0 stored in index 32 at way 0
+n address    hitCount missCount LRU: way0  way1 way2 way3 MESI  readCount writeCount hitRatio
+3 0x800      33       14              3     1    0    2    3    33        10          0.702128
+--------------------------------------------------------------------------------------------------
+Reference: 48
+data from L1 was successfully written to index 32 at way 0 in lower 32 bytes of L2 cache
+data from address 800 writing to DRAM
+
+tag 0 stored in index 32 at way 0
+n address    hitCount missCount LRU: way0  way1 way2 way3 MESI  readCount writeCount hitRatio
+1 0x800      33       15              3     1    0    2    1    33        11          0.687500
+--------------------------------------------------------------------------------------------------
+Reference: 49
+data writing from address 800 to snooped other processor
+line 800 has MESI bits set to 0 in L1 cache
+
+tag 0 stored in index 32 at way 0
+n address    hitCount missCount LRU: way0  way1 way2 way3 MESI  readCount writeCount hitRatio
+6 0x800      34       15              3     1    0    2    3    34        11          0.693878
+--------------------------------------------------------------------------------------------------
+Reference: 50
+lower 32 bytes of tag 0 at index 0 from way 0 successfully written to the L1 cache
+
+tag 0 stored in index 0 at way 0
+n address    hitCount missCount LRU: way0  way1 way2 way3 MESI  readCount writeCount hitRatio
+0 0x0        35       15              3     2    1    0    2    35        11          0.700000
+--------------------------------------------------------------------------------------------------
+Reference: 51
+data from address 0 writing to DRAM
+
+tag 0 stored in index 0 at way 0
+n address    hitCount missCount LRU: way0  way1 way2 way3 MESI  readCount writeCount hitRatio
+1 0x0        36       15              3     2    1    0    1    35        12          0.705882
+--------------------------------------------------------------------------------------------------
+Reference: 52
+data writing from address 0 to snooped other processor
+lower 32 bytes of tag 0 at index 0 from way 0 successfully written to the L1 cache
+
+tag 0 stored in index 0 at way 0
+n address    hitCount missCount LRU: way0  way1 way2 way3 MESI  readCount writeCount hitRatio
+4 0x0        37       15              3     2    1    0    2    36        12          0.711538
+--------------------------------------------------------------------------------------------------
+Reference: 53
+data from address 0 writing to DRAM
+
+tag 0 stored in index 0 at way 0
+n address    hitCount missCount LRU: way0  way1 way2 way3 MESI  readCount writeCount hitRatio
+1 0x0        38       15              3     2    1    0    1    36        13          0.716981
+--------------------------------------------------------------------------------------------------
+Reference: 54
+lower 32 bytes of tag 0 at index 0 from way 0 successfully written to the L1 cache
+
+tag 0 stored in index 0 at way 0
+n address    hitCount missCount LRU: way0  way1 way2 way3 MESI  readCount writeCount hitRatio
+0 0x0        39       15              3     2    1    0    1    37        13          0.722222
+--------------------------------------------------------------------------------------------------
+Reference: 55
+data writing from address 0 to snooped other processor
+lower 32 bytes of tag 0 at index 0 from way 0 successfully written to the L1 cache
+
+tag 0 stored in index 0 at way 0
+n address    hitCount missCount LRU: way0  way1 way2 way3 MESI  readCount writeCount hitRatio
+4 0x0        40       15              3     2    1    0    2    38        13          0.727273
+--------------------------------------------------------------------------------------------------
+Reference: 56
+lower 32 bytes of tag 0 at index 0 from way 0 successfully written to the L1 cache
+
+tag 0 stored in index 0 at way 0
+n address    hitCount missCount LRU: way0  way1 way2 way3 MESI  readCount writeCount hitRatio
+0 0x0        41       15              3     2    1    0    2    39        13          0.732143
+--------------------------------------------------------------------------------------------------
+Reference: 57
+
+tag 0 stored in index 0 at way 0
+n address    hitCount missCount LRU: way0  way1 way2 way3 MESI  readCount writeCount hitRatio
+3 0x0        42       15              3     2    1    0    3    39        13          0.736842
+--------------------------------------------------------------------------------------------------
+Reference: 58
+data from L1 was successfully written to index 0 at way 0 in lower 32 bytes of L2 cache
+data from address 0 writing to DRAM
+
+tag 0 stored in index 0 at way 0
+n address    hitCount missCount LRU: way0  way1 way2 way3 MESI  readCount writeCount hitRatio
+1 0x0        42       16              3     2    1    0    1    39        14          0.724138
+--------------------------------------------------------------------------------------------------
+Reference: 59
+data writing from address 0 to snooped other processor
+lower 32 bytes of tag 0 at index 0 from way 0 successfully written to the L1 cache
+
+tag 0 stored in index 0 at way 0
+n address    hitCount missCount LRU: way0  way1 way2 way3 MESI  readCount writeCount hitRatio
+4 0x0        43       16              3     2    1    0    2    40        14          0.728814
+--------------------------------------------------------------------------------------------------
+Reference: 60
+lower 32 bytes of tag 0 at index 0 from way 0 successfully written to the L1 cache
+
+tag 0 stored in index 0 at way 0
+n address    hitCount missCount LRU: way0  way1 way2 way3 MESI  readCount writeCount hitRatio
+0 0x0        44       16              3     2    1    0    2    41        14          0.733333
+--------------------------------------------------------------------------------------------------
+Reference: 61
+data from address 0 writing to DRAM
+
+tag 0 stored in index 0 at way 0
+n address    hitCount missCount LRU: way0  way1 way2 way3 MESI  readCount writeCount hitRatio
+1 0x0        45       16              3     2    1    0    1    41        15          0.737705
+--------------------------------------------------------------------------------------------------
+Reference: 62
+data writing from address 0 to snooped other processor
+lower 32 bytes of tag 0 at index 0 from way 0 successfully written to the L1 cache
+
+tag 0 stored in index 0 at way 0
+n address    hitCount missCount LRU: way0  way1 way2 way3 MESI  readCount writeCount hitRatio
+4 0x0        46       16              3     2    1    0    2    42        15          0.741935
+--------------------------------------------------------------------------------------------------
+Reference: 63
+data writing from address 0 to snooped other processor
+lower 32 bytes of tag 0 at index 0 from way 0 successfully written to the L1 cache
+
+tag 0 stored in index 0 at way 0
+n address    hitCount missCount LRU: way0  way1 way2 way3 MESI  readCount writeCount hitRatio
+4 0x0        47       16              3     2    1    0    2    43        15          0.746032
+--------------------------------------------------------------------------------------------------
+Reference: 64
+data writing from address 0 to snooped other processor
+line 0 has MESI bits set to 0 in L1 cache
+
+tag 0 stored in index 0 at way 0
+n address    hitCount missCount LRU: way0  way1 way2 way3 MESI  readCount writeCount hitRatio
+6 0x0        48       16              3     2    1    0    3    44        15          0.750000
+--------------------------------------------------------------------------------------------------
+Reference: 65
+lower 32 bytes of tag 1 at index 32 from way 1 successfully written to the L1 cache
+
+tag 1 stored in index 32 at way 1
+n address    hitCount missCount LRU: way0  way1 way2 way3 MESI  readCount writeCount hitRatio
+0 0x100800   49       16              2     3    0    1    1    45        15          0.753846
+--------------------------------------------------------------------------------------------------
+Reference: 66
+data writing from address 100800 to snooped other processor
+line 100800 has MESI bits set to 0 in L1 cache
+
+tag 1 stored in index 32 at way 1
+n address    hitCount missCount LRU: way0  way1 way2 way3 MESI  readCount writeCount hitRatio
+6 0x100800   50       16              2     3    0    1    3    46        15          0.757576
+--------------------------------------------------------------------------------------------------
+Reference: 67
+data from address 100800 in DRAM successfully loaded into index 32 in way 1
+lower 32 bytes of tag 1 at index 32 from way 1 successfully written to the L1 cache
+
+tag 1 stored in index 32 at way 1
+n address    hitCount missCount LRU: way0  way1 way2 way3 MESI  readCount writeCount hitRatio
+0 0x100800   50       17              2     3    0    1    1    47        15          0.746269
+--------------------------------------------------------------------------------------------------
+Reference: 68
+data writing from address 100800 to snooped other processor
+lower 32 bytes of tag 1 at index 32 from way 1 successfully written to the L1 cache
+
+tag 1 stored in index 32 at way 1
+n address    hitCount missCount LRU: way0  way1 way2 way3 MESI  readCount writeCount hitRatio
+4 0x100800   51       17              2     3    0    1    2    48        15          0.750000
+--------------------------------------------------------------------------------------------------
+Reference: 69
+data writing from address 100800 to snooped other processor
+line 100800 has MESI bits set to 0 in L1 cache
+
+tag 1 stored in index 32 at way 1
+n address    hitCount missCount LRU: way0  way1 way2 way3 MESI  readCount writeCount hitRatio
+6 0x100800   52       17              2     3    0    1    3    49        15          0.753623
+--------------------------------------------------------------------------------------------------
+Reference: 70
+
+tag 1 stored in index 32 at way 1
+n address    hitCount missCount LRU: way0  way1 way2 way3 MESI  readCount writeCount hitRatio
+3 0x100800   52       18              2     3    0    1    3    49        15          0.742857
+--------------------------------------------------------------------------------------------------
+Reference: 71
+data from L1 was successfully written to index 32 at way 1 in lower 32 bytes of L2 cache
+data from address 100800 writing to DRAM
+
+tag 1 stored in index 32 at way 1
+n address    hitCount missCount LRU: way0  way1 way2 way3 MESI  readCount writeCount hitRatio
+1 0x100800   52       19              2     3    0    1    1    49        16          0.732394
+--------------------------------------------------------------------------------------------------
+Reference: 72
+data writing from address 100800 to snooped other processor
+line 100800 has MESI bits set to 0 in L1 cache
+
+tag 1 stored in index 32 at way 1
+n address    hitCount missCount LRU: way0  way1 way2 way3 MESI  readCount writeCount hitRatio
+6 0x100800   53       19              2     3    0    1    3    50        16          0.736111
+--------------------------------------------------------------------------------------------------
+Reference: 73
+data from address 100800 in DRAM successfully loaded into index 32 in way 1
+lower 32 bytes of tag 1 at index 32 from way 1 successfully written to the L1 cache
+
+tag 1 stored in index 32 at way 1
+n address    hitCount missCount LRU: way0  way1 way2 way3 MESI  readCount writeCount hitRatio
+0 0x100800   53       20              2     3    0    1    1    51        16          0.726027
+--------------------------------------------------------------------------------------------------
+Reference: 74
+lower 32 bytes of tag 3 at index 32 from way 3 successfully written to the L1 cache
+
+tag 3 stored in index 32 at way 3
+n address    hitCount missCount LRU: way0  way1 way2 way3 MESI  readCount writeCount hitRatio
+0 0x300800   54       20              1     2    0    3    1    52        16          0.729730
+--------------------------------------------------------------------------------------------------
+Reference: 75
+data from L1 was successfully written to index 32 at way 2 in lower 32 bytes of L2 cache
+data from address 200800 writing to DRAM
+
+tag 2 stored in index 32 at way 2
+n address    hitCount missCount LRU: way0  way1 way2 way3 MESI  readCount writeCount hitRatio
+1 0x200800   54       21              0     1    3    2    1    52        17          0.720000
+--------------------------------------------------------------------------------------------------
+Reference: 76
+
+tag 1 stored in index 32 at way 1
+n address    hitCount missCount LRU: way0  way1 way2 way3 MESI  readCount writeCount hitRatio
+3 0x100800   55       21              0     1    3    2    3    52        17          0.723684
+--------------------------------------------------------------------------------------------------
+Reference: 77
+data from L1 was successfully written to index 32 at way 0 in lower 32 bytes of L2 cache
+data from address 800 writing to DRAM
+
+tag 0 stored in index 32 at way 0
+n address    hitCount missCount LRU: way0  way1 way2 way3 MESI  readCount writeCount hitRatio
+1 0x800      55       22              3     0    2    1    1    52        18          0.714286
+--------------------------------------------------------------------------------------------------
+Reference: 78
+lower 32 bytes of tag 0 at index 32 from way 0 successfully written to the L1 cache
+
+tag 0 stored in index 32 at way 0
+n address    hitCount missCount LRU: way0  way1 way2 way3 MESI  readCount writeCount hitRatio
+0 0x800      56       22              3     0    2    1    1    53        18          0.717949
+--------------------------------------------------------------------------------------------------
+Reference: 79
+data writing from address 800 to snooped other processor
+lower 32 bytes of tag 0 at index 32 from way 0 successfully written to the L1 cache
+
+tag 0 stored in index 32 at way 0
+n address    hitCount missCount LRU: way0  way1 way2 way3 MESI  readCount writeCount hitRatio
+4 0x800      57       22              3     0    2    1    2    54        18          0.721519
+--------------------------------------------------------------------------------------------------
+Reference: 80
+
+tag 2 stored in index 32 at way 2
+n address    hitCount missCount LRU: way0  way1 way2 way3 MESI  readCount writeCount hitRatio
+5 0x200800   58       22              3     0    2    1    3    54        19          0.725000
+--------------------------------------------------------------------------------------------------
+Reference: 81
+data from address 100800 in DRAM successfully loaded into index 32 in way 1
+lower 32 bytes of tag 1 at index 32 from way 1 successfully written to the L1 cache
+
+tag 1 stored in index 32 at way 1
+n address    hitCount missCount LRU: way0  way1 way2 way3 MESI  readCount writeCount hitRatio
+0 0x100800   58       23              2     3    1    0    1    55        19          0.716049
+--------------------------------------------------------------------------------------------------
+Reference: 82
+lower 32 bytes of tag 3 at index 32 from way 3 successfully written to the L1 cache
+
+tag 3 stored in index 32 at way 3
+n address    hitCount missCount LRU: way0  way1 way2 way3 MESI  readCount writeCount hitRatio
+0 0x300800   59       23              1     2    0    3    1    56        19          0.719512
+--------------------------------------------------------------------------------------------------
+Reference: 83
+data from address 800 writing to DRAM
+
+tag 0 stored in index 32 at way 0
+n address    hitCount missCount LRU: way0  way1 way2 way3 MESI  readCount writeCount hitRatio
+1 0x800      60       23              3     1    0    2    1    56        20          0.722892
+--------------------------------------------------------------------------------------------------
+Reference: 84
+data writing from address 800 to snooped other processor
+lower 32 bytes of tag 0 at index 32 from way 0 successfully written to the L1 cache
+
+tag 0 stored in index 32 at way 0
+n address    hitCount missCount LRU: way0  way1 way2 way3 MESI  readCount writeCount hitRatio
+4 0x800      61       23              3     1    0    2    2    57        20          0.726190
+--------------------------------------------------------------------------------------------------
+Reference: 85
+data from address 800 writing to DRAM
+
+tag 0 stored in index 32 at way 0
+n address    hitCount missCount LRU: way0  way1 way2 way3 MESI  readCount writeCount hitRatio
+1 0x800      62       23              3     1    0    2    1    57        21          0.729412
+--------------------------------------------------------------------------------------------------
+Reference: 86
+lower 32 bytes of tag 0 at index 32 from way 0 successfully written to the L1 cache
+
+tag 0 stored in index 32 at way 0
+n address    hitCount missCount LRU: way0  way1 way2 way3 MESI  readCount writeCount hitRatio
+0 0x800      63       23              3     1    0    2    1    58        21          0.732558
+--------------------------------------------------------------------------------------------------
+Reference: 87
+data writing from address 800 to snooped other processor
+lower 32 bytes of tag 0 at index 32 from way 0 successfully written to the L1 cache
+
+tag 0 stored in index 32 at way 0
+n address    hitCount missCount LRU: way0  way1 way2 way3 MESI  readCount writeCount hitRatio
+4 0x800      64       23              3     1    0    2    2    59        21          0.735632
+--------------------------------------------------------------------------------------------------
+Reference: 88
+lower 32 bytes of tag 0 at index 32 from way 0 successfully written to the L1 cache
+
+tag 0 stored in index 32 at way 0
+n address    hitCount missCount LRU: way0  way1 way2 way3 MESI  readCount writeCount hitRatio
+0 0x800      65       23              3     1    0    2    2    60        21          0.738636
+--------------------------------------------------------------------------------------------------
+Reference: 89
+
+tag 0 stored in index 32 at way 0
+n address    hitCount missCount LRU: way0  way1 way2 way3 MESI  readCount writeCount hitRatio
+3 0x800      66       23              3     1    0    2    3    60        21          0.741573
+--------------------------------------------------------------------------------------------------
+Reference: 90
+data from L1 was successfully written to index 32 at way 0 in lower 32 bytes of L2 cache
+data from address 800 writing to DRAM
+
+tag 0 stored in index 32 at way 0
+n address    hitCount missCount LRU: way0  way1 way2 way3 MESI  readCount writeCount hitRatio
+1 0x800      66       24              3     1    0    2    1    60        22          0.733333
+--------------------------------------------------------------------------------------------------
+Reference: 91
+data from L1 was successfully written to index 48 at way 0 in lower 32 bytes of L2 cache
+data from address c00 writing to DRAM
+
+tag 0 stored in index 48 at way 0
+n address    hitCount missCount LRU: way0  way1 way2 way3 MESI  readCount writeCount hitRatio
+1 0xc00      66       25              3     0    1    2    1    60        23          0.725275
+--------------------------------------------------------------------------------------------------
+Reference: 92
+data from address 200c00 in DRAM successfully loaded into index 48 in way 1
+lower 32 bytes of tag 2 at index 48 from way 1 successfully written to the L1 cache
+
+tag 2 stored in index 48 at way 1
+n address    hitCount missCount LRU: way0  way1 way2 way3 MESI  readCount writeCount hitRatio
+0 0x200c00   66       26              2     3    0    1    1    61        23          0.717391
+--------------------------------------------------------------------------------------------------
+Reference: 93
+data from L1 was successfully written to index 48 at way 2 in lower 32 bytes of L2 cache
+data from address 100c00 writing to DRAM
+
+tag 1 stored in index 48 at way 2
+n address    hitCount missCount LRU: way0  way1 way2 way3 MESI  readCount writeCount hitRatio
+1 0x100c00   66       27              1     2    3    0    1    61        24          0.709677
+--------------------------------------------------------------------------------------------------
+Reference: 94
+data from address 300c00 in DRAM successfully loaded into index 48 in way 3
+lower 32 bytes of tag 3 at index 48 from way 3 successfully written to the L1 cache
+
+tag 3 stored in index 48 at way 3
+n address    hitCount missCount LRU: way0  way1 way2 way3 MESI  readCount writeCount hitRatio
+0 0x300c00   66       28              0     1    2    3    1    62        24          0.702128
+--------------------------------------------------------------------------------------------------
+Reference: 95
+lower 32 bytes of tag 2 at index 48 from way 1 successfully written to the L1 cache
+
+tag 2 stored in index 48 at way 1
+n address    hitCount missCount LRU: way0  way1 way2 way3 MESI  readCount writeCount hitRatio
+2 0x200c00   67       28              0     3    1    2    1    63        24          0.705263
+--------------------------------------------------------------------------------------------------
+Reference: 96
+lower 32 bytes of tag 0 at index 48 from way 0 successfully written to the L1 cache
+
+tag 0 stored in index 48 at way 0
+n address    hitCount missCount LRU: way0  way1 way2 way3 MESI  readCount writeCount hitRatio
+2 0xc00      68       28              3     2    0    1    1    64        24          0.708333
+--------------------------------------------------------------------------------------------------
