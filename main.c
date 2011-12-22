@@ -23,10 +23,10 @@
 #define LINES 16384
 #define WAYS 4
 
-// do not touch these global variables!
+// touch nothing else!
 
-#define MAXLINE (LINES - 1)
-#define MAXWAY (WAYS - 1)
+#define MAXLINE 16383
+#define MAXWAY 3
 
 #define M 0
 #define E 1
@@ -102,16 +102,16 @@ void updateLRU(int index, int ourway)
      return;
   else 
   {
-     int testbits = L2cache[index][ourway].LRUbits + 1;
+     int ourbits = L2cache[index][ourway].LRUbits;
+     int testbits = ourbits++;
      int testway;
-     for (testbits; testbits <= MAXWAY; testbits++)
+     while (testbits <= MAXWAY)
      {
-         for (testway = 0; testway <= MAXWAY; testway++)
-         {
-            if (L2cache[index][testway].LRUbits == testbits)
-               break;
-         }
-         L2cache[index][testway].LRUbits = testbits - 1;
+         testway = 0;
+         while (testway <= MAXWAY && L2cache[index][testway].LRUbits != testbits)
+            testway++;
+         L2cache[index][testway].LRUbits = L2cache[index][testway].LRUbits - 1;
+         testbits++;
      }
      L2cache[index][ourway].LRUbits = MAXWAY;
   }
