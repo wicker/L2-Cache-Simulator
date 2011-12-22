@@ -16,28 +16,22 @@
 #include <unistd.h>
 #include <stdint.h>
 
-// MESI global variables
+// only change these lines when changing total size of the cache! 
+// LINES is the total number of lines (16384 for a 16K line cache)
+// WAYS is the total number of ways (columns) in that cache
+
+#define LINES 16384
+#define WAYS 4
+
+// do not touch these global variables!
+
+#define MAXLINE (LINES - 1)
+#define MAXWAY (WAYS - 1)
 
 #define M 0
 #define E 1
 #define S 2 
 #define I 3
-
-// data initialization global variables
-// all data, whether 16 bytes or 32 bytes or 64 bytes, will be initialized
-// as a two-dimensional array. specify the integer of the number of columns - 1
-// and the number of rows - 1 here.
-// we have chosen MAXROW = 1 and MAXCOL = 7
-// we are using longs for each element so
-// 2 rows x 8 columns x 32 bits each = 32 bytes
-
-// we have split them into halves to be able to write 16 bytes to L1
-
-#define MAXLINE 16383
-#define MAXWAY 3
-
-#define MAXROW 1
-#define MAXCOL 7
 
 typedef struct  
 {
@@ -51,222 +45,72 @@ typedef struct
 // creates the single global cache
 cacheLine L2cache[MAXLINE][MAXWAY];
 
-FILE *ifp,*ofpD,*ofpM,*ofp;
+FILE *ifp,*ofpD,*ofp;
 
-// initially set the LRU bits to the way
-int setLRUbitsToWay() 
+// step through the cache and set initial values
+// LRU bit will be the same value as the way
+// MESI bit begins invalid (empty)
+
+void setLRUbitsToWay()
 {
   int index;
-  for (index = 0; index < MAXLINE; index++)
+  for (index = 0; index <= MAXLINE; index++)
   {
     int way;
-    for (way = 0; index < MAXWAY; way++)
+    int LRUBIT = MAXWAY;
+    for (way = LRUBIT; way >= 0; way--)
     {
        L2cache[index][way].MESIbits = I;
        L2cache[index][way].LRUbits = way;
+       LRUBIT--;
     }
   }
-  return 0;
 }
 
+// check every way in the given index to see if the given tag exists
+// tag in each way of the appropriate index
 int checkTag(int index, int tag)
 {
-  // check for tag in each way of the appropriate index
-  int way = 0;
-  while (way != 4)
+  for (way = 0; way <= MAXWAY; way++)
   {
     if (L2cache[index][way].tag == tag)
        return way;
-    else
-       way++;
-  }
-  return 4;
+  } 
+  return WAYS;
 }
 
-// this function takes in the L2 index and way, and the 32-bit address, and 
-// generates a 32-byte quantity which is then written to the L2 cache. 
-// this follows the same algorithm as the readFromDRAM() function
-
-void dataFromL1(int index, int way, int addr, int byteSelect)
-{
-   ofp = fopen("testout.txt", "a");
-   if (byteSelect == 0)
-   {
-      fprintf(ofp,"data from L1 was successfully written to index %d at way %d in lower 32 bytes of L2 cache\n",index,way);
-      fflush(ofp);
-   }
-   else
-   {
-      fprintf(ofp,"data from L1 was successfully written to index %d at way %d in upper 32 bytes of L2 cache\n",index,way);
-      fflush(ofp);
-   }
-}
-
-// this function takes in the index and way of a line
-// and writes the data contained therein to the L1 cache
-// using the upper or lower 32 bytes depending on whether byteselect = 0 or 1 
-
-void dataToL1(int byteSelect, int index, int tag, int way) 
-{
-   ofp = fopen("testout.txt", "a");
-   if (byteSelect == 0)
-    {
-      fprintf(ofp,"lower 32 bytes of tag %d at index %d from way %d successfully written to the L1 cache\n",tag,index,way);
-      fflush(ofp);
-    }
-    else
-    {
-      fprintf(ofp,"upper 32 bytes of tag %d at index %d from way %d successfully written to the L1 cache\n",tag,index,way);
-      fflush(ofp);
-    }
-}
-
-// this function simulates a read by the L2 cache of DRAM
-// 
-
-void dataFromDRAM(int addr, int index, int way, int refCount)
-{
-   ofpM = fopen("memory.txt", "a");
-   fprintf(ofp,"data from address %x in DRAM successfully loaded into index %d in way %d\n",addr,index,way);
-   fflush(ofp);
-   ofp = fopen("testout.txt", "a");
-   fprintf(ofpM,"Reference %d successfully loaded data from address %x in DRAM to index %d in way %d\n",refCount,addr,index,way);
-   fflush(ofpM);
-}
-
-// This function invalidates the line in L1 by setting that non-existent
-// line to MESI bits == I
-int invalidateInL1(int addr)
-{
-   ofp = fopen("testout.txt", "a");
-   fprintf(ofp,"line %x has MESI bits set to 0 in L1 cache\n",addr);
-   fflush(ofp);
-   return addr;
-}
-
-// This function accepts the data but doesn't store it anywhere that will
-// be retained after the function returns; it will return the address as
-// a constant when the function completes
-int dataToDRAM(int addr, int index, int way, int refCount)
-{
-   ofp = fopen("testout.txt", "a");
-   fprintf(ofp,"data from address %x writing to DRAM\n",addr);
-   fflush(ofp);
-   ofpM = fopen("memory.txt", "a");
-   fprintf(ofpM,"Reference %d successfully wrote data from address %x in L2 cache to index %d in way %d\n",refCount,addr,index,way);
-   fflush(ofpM);
-   return addr;
-}
-
-// This function accepts the data but doesn't store it anywhere that will
-// be retained after the function returns; it will return the address as
-// a constant when the function completes
-int dataToSnooped(int addr)
-{
-   ofp = fopen("testout.txt", "a");
-   fprintf(ofp,"data writing from address %x to snooped other processor\n",addr);
-   fflush(ofp);
-   return addr;
-}
-
-// this function checks whether the tag exists
-// first it checks for the index
-// then for the tag in one of the four columns
-
-int checkEmpty(int index)
-{
-  int way = 0;
-  while (way != 4)
-  {
-    if (L2cache[index][way].MESIbits == I)
-       return way;
-    else
-       way++;
-  }
-  return 4;
-}
-
-void updateLRU(int index, int ourway)
-{
-  int ourbits = L2cache[index][ourway].LRUbits; // actual LRU bits of our way here
-  int tempway = 0; // for testing
-  // depending on our way, we know to look at the other three LRU shorts in order
-
-  switch(ourbits)
-  {
-    // what if our way's bits were already the most recently used with LRU = 3?
-    case 3:
-        break; // no update required;
-
-    // what if our way's bits were the second-most recently used with LRU = 2?
-    case 2:
-        // find the way with LRU bits = 3 so we can swap
-        while (L2cache[index][tempway].LRUbits != 3)
-        {
-          tempway++;
-        }
-        L2cache[index][tempway].LRUbits = 2;
-        L2cache[index][ourway].LRUbits = 3;
-        break;
-
-    // what if our way's bits were the third-most recently used with LRU = 1?
-    case 1:
-        // find the way with LRU bits = 2 so we can decrement them to LRU = 1
-        while (L2cache[index][tempway].LRUbits != 2)
-        {
-          tempway++;
-        }
-        L2cache[index][tempway].LRUbits = 1;
-        tempway = 0;
-        // find the way with LRU bits = 3 so we can decrement them to LRU = 2
-        while (L2cache[index][tempway].LRUbits != 3)
-        {
-          tempway++;
-        }
-        L2cache[index][tempway].LRUbits = 2;
-        // set our way's LRU bits to most recently used, or LRU = 3
-        L2cache[index][ourway].LRUbits = 3;
-        break;
-    case 0:
-        // find the way with LRU bits = 1 so we can decrement them to LRU = 0
-        while (L2cache[index][tempway].LRUbits != 1)
-        {
-          tempway++;
-        }
-        L2cache[index][tempway].LRUbits = 0;
-        tempway = 0;
-        // find the way with LRU bits = 2 so we can decrement them to LRU = 1
-        while (L2cache[index][tempway].LRUbits != 2)
-        {
-          tempway++;
-        }
-        L2cache[index][tempway].LRUbits = 1;
-        tempway = 0;
-        // find the way with LRU bits = 3 so we can decrement them to LRU = 2
-         while (L2cache[index][tempway].LRUbits != 3)
-        {
-          tempway++;
-        }
-        L2cache[index][tempway].LRUbits = 2;
-        L2cache[index][ourway].LRUbits = 3;
-        break;
-  }; // end switch
-}
-
-// given an index, checkLRU() finds the least recently used way
-// this way will have LRUBits == 0 (10 binary)
-
+// given an index, this function returns the least recently used way
+// LRU bits of 0 give the least recently used way
+// LRU bits of MAXWAY give most recently used way
 int checkLRU(int index)
 {
-  int way = 3;
-  while (way != -1)
+  for (way = 0; way <= MAXWAY; way++) 
   {
     if (L2cache[index][way].LRUbits == 0)
        return way;
-    else
-       way--;
   }
-  return 0; 
+  return WAYS; 
+}
+
+// this function updates the LRU bits to reflect a new most recently used way
+void updateLRU(int index, int ourway)
+{
+  // if the LRU bits of our way are already the most recently used, we do nothing
+  if (L2cache[index][ourway].LRUbits == MAXWAY)
+     break;
+  else 
+  {
+     int ourbits = L2cache[index][ourway].LRUbits++;
+     for (ourbits; ourbits <= MAXWAY; ourbits++)
+     {
+         for (way = 0; way <= MAXWAY; way++)
+         {
+            if (L2cache[index][ourway].LRUbits == ourbits)
+               break;
+         }
+     L2cache[index][ourway].LRUbits = ourbits--;
+     }
+  }
 }
 
 int main()
@@ -285,9 +129,6 @@ int main()
 
   // initialize the input from the tracefile
   int n;
-
-  // to handle the addr in hex, must be specified with prefix '0x' 
-  // it will be read as hex as long as the read uses %x instead of %d 
   int addr;
 
   // initialize the LRU bits to the way
