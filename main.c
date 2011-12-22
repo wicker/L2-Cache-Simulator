@@ -1,7 +1,5 @@
 /* main.c
- * Jen Hanni, Brian Rho, Sai Prasanth
- * 
- * This file defines the entire program.
+ * Jen Hanni
  * 
  * The main reads the file 'test.txt' and 
  * pass on the command and addresses to the appropriate functions.
@@ -14,12 +12,9 @@
  */
 
 #include <stdio.h>
-#include <string.h>
 #include <stdlib.h>
 #include <unistd.h>
 #include <stdint.h>
-
-// 
 
 // MESI global variables
 
@@ -38,45 +33,38 @@
 
 // we have split them into halves to be able to write 16 bytes to L1
 
-#define MAXLINE 16384
-#define MAXWAY 4
+#define MAXLINE 16383
+#define MAXWAY 3
+
+#define MAXROW 1
+#define MAXCOL 7
 
 typedef struct  
 {
-  // MESI bits are M = 00, E = 01, S = 10, and I = 11, defined globally above
   int MESIbits;
-  // LRUBits are 0||1||2||3 with 0 most recently used
   int LRUbits;
   int tag;
   int address;
 } cacheLine;
 
-// initialize a multi-dimensional array
-// consisting of 16384 (16K) rows and 4 columns
-// [row][col]
-// creates global cache
+// initialize a multi-dimensional array [row][col]
+// creates the single global cache
 cacheLine L2cache[MAXLINE][MAXWAY];
- 
-FILE *ifp,*ofpD,*ofpM;
 
-// testing 
- FILE *ofp;
+FILE *ifp,*ofpD,*ofpM,*ofp;
 
 // initially set the LRU bits to the way
 int setLRUbitsToWay() 
 {
-  int index = 0;
-  while (index < MAXLINE)
+  int index;
+  for (index = 0; index < MAXLINE; index++)
   {
-    int way = 0;
-    while (way < MAXWAY)
+    int way;
+    for (way = 0; index < MAXWAY; way++)
     {
-       L2cache[index][way].tag = -1;
        L2cache[index][way].MESIbits = I;
        L2cache[index][way].LRUbits = way;
-       way++;
     }
-    index++;
   }
   return 0;
 }
@@ -283,7 +271,7 @@ int checkLRU(int index)
 
 int main()
 {
-  memset (L2cache, 0, sizeof (cacheLine));
+  memset(L2cache, 0, sizeof (cacheLine));
 
   // initialize the counters
   int refCount = 0;
@@ -307,7 +295,7 @@ int main()
   
   // open the tracefile, make it available to 'r' read
   // open the output file to make it available to append each iteration's result
-  ifp = fopen("testfile.txt", "r");
+  ifp = fopen("testfile.din", "r");
   ofp = fopen("testout.txt", "a");
 
   fprintf(ofp,"-----------------------------------------------------------------------------------------------------\n");
