@@ -56,21 +56,22 @@ void setLRUbitsToWay()
   int index;
   for (index = 0; index <= MAXLINE; index++)
   {
-    int way;
-    int LRUBIT = MAXWAY;
-    for (way = LRUBIT; way >= 0; way--)
+    int way = MAXWAY;
+    for (way = MAXWAY; way >= 0; way--)
     {
        L2cache[index][way].MESIbits = I;
        L2cache[index][way].LRUbits = way;
-       LRUBIT--;
+       L2cache[index][way].tag = -1;
     }
   }
+  return;
 }
 
 // check every way in the given index to see if the given tag exists
 // tag in each way of the appropriate index
 int checkTag(int index, int tag)
 {
+  int way;
   for (way = 0; way <= MAXWAY; way++)
   {
     if (L2cache[index][way].tag == tag)
@@ -84,6 +85,7 @@ int checkTag(int index, int tag)
 // LRU bits of MAXWAY give most recently used way
 int checkLRU(int index)
 {
+  int way;
   for (way = 0; way <= MAXWAY; way++) 
   {
     if (L2cache[index][way].LRUbits == 0)
@@ -97,19 +99,21 @@ void updateLRU(int index, int ourway)
 {
   // if the LRU bits of our way are already the most recently used, we do nothing
   if (L2cache[index][ourway].LRUbits == MAXWAY)
-     break;
+     return;
   else 
   {
-     int ourbits = L2cache[index][ourway].LRUbits++;
-     for (ourbits; ourbits <= MAXWAY; ourbits++)
+     int testbits = L2cache[index][ourway].LRUbits + 1;
+     int testway;
+     for (testbits; testbits <= MAXWAY; testbits++)
      {
-         for (way = 0; way <= MAXWAY; way++)
+         for (testway = 0; testway <= MAXWAY; testway++)
          {
-            if (L2cache[index][ourway].LRUbits == ourbits)
+            if (L2cache[index][testway].LRUbits == testbits)
                break;
          }
-     L2cache[index][ourway].LRUbits = ourbits--;
+         L2cache[index][testway].LRUbits = testbits - 1;
      }
+     L2cache[index][ourway].LRUbits = MAXWAY;
   }
 }
 
@@ -167,7 +171,7 @@ int main()
 	// determine whether this tag exists in the cache and, if so, which way
         way = checkTag(index, tag);
         // if the tag exists
-	if (way == 0 || way == 1 || way == 2 || way == 3)
+	if (way <= MAXWAY)
 	{
 	   // this tag exists and it's valid as per its MESI bits
 	   int MESI = L2cache[index][way].MESIbits;
@@ -176,7 +180,6 @@ int main()
 	      hitCount++;
 	      // update the LRU to set 'way' to least recently used
 	      updateLRU(index, way);
-	      dataToL1(byteSelect,index,tag,way);
               // MESI remains unchanged
               // copy the addr to address in the cacheLine struct for case 9 display
               L2cache[index][way].address = addr;
@@ -185,8 +188,6 @@ int main()
 	   else 
            {
 	      missCount++;
-	      dataFromDRAM(addr,index,way,refCount);
-              dataToL1(byteSelect,index,tag,way);
               // update LRU
               updateLRU(index, way);
 	      L2cache[index][way].MESIbits = E;
@@ -201,9 +202,7 @@ int main()
 	   way = checkLRU(index);
            // update LRU
            updateLRU(index, way);
-           dataFromDRAM(addr,index,way,refCount);
            L2cache[index][way].tag = tag;
-           dataToL1(byteSelect,index,tag,way);
 	   L2cache[index][way].MESIbits = E;
            L2cache[index][way].address = addr;
         }
@@ -227,7 +226,6 @@ int main()
 	      L2cache[index][way].MESIbits = E;
 	      // because L2 has everything in L1, we send contents of our L2
               // from our copy of that index/way to the DRAM
-	      dataToDRAM(addr,index,way,refCount);
               L2cache[index][way].MESIbits = M;
               L2cache[index][way].address = addr;
            }
@@ -240,8 +238,6 @@ int main()
               updateLRU(index, way);
               // set MESI to Modified
 	      L2cache[index][way].MESIbits = E;
-	      dataFromL1(index, way, addr, byteSelect);
-	      dataToDRAM(addr,index,way,refCount);
 	      // MESI = Exclusive after memory write
 	      L2cache[index][way].MESIbits = M;
               L2cache[index][way].address = addr;
@@ -255,9 +251,7 @@ int main()
 	   // use the LRU bit to determine which way to evict
 	   way = checkLRU(index);
 	   L2cache[index][way].MESIbits = E;
-	   dataFromL1(index, way, addr, byteSelect);
            L2cache[index][way].tag = tag;
-	   dataToDRAM(addr,index,way,refCount);
            // update LRU
            updateLRU(index, way);
            // MESI = Exclusive after memory write
@@ -282,10 +276,7 @@ int main()
 	      hitCount++;
 	      hitM++;
 	      // first response is to read out our modified copy to other cache
-              dataToSnooped(addr);
               // then we write to our L1, just in case, and on to DRAM
-	      dataToL1(byteSelect,index,tag,way);
-              dataToDRAM(addr,index,way,refCount); 
               // set MESI to shared after mem write to other processor completed
 	      L2cache[index][way].MESIbits = S;
               L2cache[index][way].address = addr;
@@ -295,8 +286,6 @@ int main()
            {
               hitCount++;
               hit++;
-	      dataToSnooped(addr);
-	      dataToL1(byteSelect,index,tag,way);
               // set MESI to shared after mem write to other processor completed
 	      L2cache[index][way].MESIbits = S;
               L2cache[index][way].address = addr;
@@ -372,8 +361,6 @@ int main()
               {
                  hitM++;
               }
-              dataToSnooped(addr);
-	      invalidateInL1(addr);
 	      L2cache[index][way].MESIbits = I; 
               // LRU update not necessary here because our algorithm checks for 
               // empty (invalid MESI bit) lines first before checking LRU bits
