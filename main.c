@@ -43,7 +43,7 @@ typedef struct
 
 // initialize a multi-dimensional array [row][col]
 // creates the single global cache
-cacheLine L2cache[MAXLINE][MAXWAY];
+cacheLine L2cache[LINES][WAYS];
 
 FILE *ifp,*ofpD,*ofp;
 
@@ -55,9 +55,7 @@ FILE *ifp,*ofpD,*ofp;
 void setLRUbitsToWay()
 {
   int index;
-  index = 0;
   int way;
-  way = 0;
   for (index = 0; index <= MAXLINE; index++)
   {
     for (way = 0; way <= MAXWAY; way++)
@@ -107,10 +105,10 @@ void updateLRU(int index, int ourway)
      int ourbits = L2cache[index][ourway].LRUbits;
      int testbits = ourbits++;
      int testway;
-     for (testbits = 0; testbits <= 3; testbits++)
+     for (testbits = 0; testbits <= MAXWAY; testbits++)
      {
          testway = 0;
-         while (testway < 4)
+         while (testway <= MAXWAY)
          {
             if (testbits == L2cache[index][testway].LRUbits)
                {
