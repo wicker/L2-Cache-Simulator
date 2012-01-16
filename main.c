@@ -20,12 +20,12 @@
 // LINES is the total number of lines (16384 for a 16K line cache)
 // WAYS is the total number of ways (columns) in that cache
 
-#define LINES 16384
+#define LINES 2
 #define WAYS 4
 
-// touch nothing else!
+// MAXLINE and MAXWAY are LINES-- and WAYS-- respectively
 
-#define MAXLINE 16383
+#define MAXLINE 1
 #define MAXWAY 3
 
 #define M 0
@@ -50,21 +50,23 @@ FILE *ifp,*ofpD,*ofp;
 // step through the cache and set initial values
 // LRU bit will be the same value as the way
 // MESI bit begins invalid (empty)
+// Tag bits set to null because access decisions based on MESI
 
 void setLRUbitsToWay()
 {
   int index;
+  index = 0;
+  int way;
+  way = 0;
   for (index = 0; index <= MAXLINE; index++)
   {
-    int way = MAXWAY;
-    for (way = MAXWAY; way >= 0; way--)
+    for (way = 0; way <= MAXWAY; way++)
     {
-       L2cache[index][way].MESIbits = I;
        L2cache[index][way].LRUbits = way;
-       L2cache[index][way].tag = -1;
+       L2cache[index][way].MESIbits = 3;
+       L2cache[index][way].tag = 0;
     }
   }
-  return;
 }
 
 // check every way in the given index to see if the given tag exists
@@ -105,16 +107,71 @@ void updateLRU(int index, int ourway)
      int ourbits = L2cache[index][ourway].LRUbits;
      int testbits = ourbits++;
      int testway;
-     while (testbits <= MAXWAY)
+     for (testbits = 0; testbits <= 3; testbits++)
      {
          testway = 0;
-         while (testway <= MAXWAY && L2cache[index][testway].LRUbits != testbits)
-            testway++;
-         L2cache[index][testway].LRUbits = L2cache[index][testway].LRUbits - 1;
-         testbits++;
+         while (testway < 4)
+         {
+            if (testbits == L2cache[index][testway].LRUbits)
+               {
+                  L2cache[index][testway].LRUbits--;
+                  break;
+               }
+            else 
+               testway++;
+	 }  
      }
      L2cache[index][ourway].LRUbits = MAXWAY;
   }
+}
+
+// This function takes in an index and tests all ways within that index,
+// returning a 0 if it finds any valid way and a 1 if it does not.
+
+int testIndex(int index, int way)
+{
+   for (way = 0; way <= MAXWAY; way++)
+   {
+       if (L2cache[index][way].MESIbits != I)
+       {
+          return 0;
+       }
+   }
+   return 1;
+}
+
+// The cache displays all indices containing at least one way with a 
+// valid MESI bit
+
+void cacheDisplay()
+{
+   int index;
+   int way;
+   ofpD = fopen("display.txt", "a");
+
+   fprintf(ofpD,"------------------------------------------\n");
+   fflush(ofpD);
+
+   for (index = 0; index <= MAXLINE; index++)
+   {
+       fprintf(ofpD,"INDEX: 0x%-8x\n",index);
+       fflush(ofpD);
+
+       if (testIndex(index,way) == 0)
+       {
+          for (way = 0; way <= MAXWAY; way++)
+          {
+             fprintf(ofpD,"WAY %-8d LRU: %-4d MESI: %-10d TAG: %-8d"
+                          " ADDR: %-8d\n",
+                          way,
+                          L2cache[index][way].LRUbits,
+                          L2cache[index][way].MESIbits,
+                          L2cache[index][way].tag,
+                          L2cache[index][way].address);
+             fflush(ofpD);
+          }
+      }
+   }
 }
 
 int main()
@@ -137,14 +194,11 @@ int main()
 
   // initialize the LRU bits to the way
   setLRUbitsToWay();
-  
+
   // open the tracefile, make it available to 'r' read
   // open the output file to make it available to append each iteration's result
   ifp = fopen("testfile.din", "r");
   ofp = fopen("testout.txt", "a");
-
-  fprintf(ofp,"-----------------------------------------------------------------------------------------------------\n");
-  fflush(ofp);
 
   // set it up to read line by line, set n and addr accordingly
   while (fscanf(ifp, "%d %x\n", &n, &addr) != EOF) 
@@ -155,9 +209,6 @@ int main()
     // get 1 bit from the fifth position to check later whether 1 or 0
     // int byteSelect = (addr >> 5) & ~(~0 << 1);
     refCount++;
-
-    fprintf(ofp,"Reference: %d\n",refCount);
-    fflush(ofp);
 
     switch (n) 
     {
@@ -209,8 +260,7 @@ int main()
 	   // if this tag exists and it's valid per its MESI bits...
 	   if (MESI == M || MESI == E || MESI == S)
 	      hitCount++;
-           // if this tag exists but its MESI bits say invalid, needs to be set M
-           // in this case we have to get the data from L1 and expand it to 64 bytes
+           // if this tag exists MESI bits say invalid, needs to be set M
            else
               missCount++;
         }
@@ -222,9 +272,9 @@ int main()
 	   way = checkLRU(index);
            L2cache[index][way].tag = tag;
         }
-      updateLRU(index, way);
-      L2cache[index][way].MESIbits = M;
-      L2cache[index][way].address = addr;
+        updateLRU(index, way);
+        L2cache[index][way].MESIbits = M;
+        L2cache[index][way].address = addr;
       break;
       // 4 snooped a read request from another processor
       case 4:
@@ -238,12 +288,12 @@ int main()
 	   if (MESI == M || MESI == E || MESI == S)
 	   {
 	      hitCount++;
-	      // if modified, read out our copy to other cache, then L1, then to DRAM
+	      // if modified, send copy to other cache, then L1, then to DRAM
               if (MESI == M)
                  hitM++;
               else
                  hit++;
-              // then set MESI to shared after mem write to other processor completed
+              // then set MESI to shared
 	      L2cache[index][way].MESIbits = S;
               L2cache[index][way].address = addr;
            }
@@ -252,8 +302,8 @@ int main()
               missCount++;
         }
       break;
-      // snooped write request from another processor
-      // snooped invalidate command from another processor
+      // 3 snooped invalidate command from another processor
+      // 5 snooped write request from another processor
       case 3:
       case 5:
         if (n == 5)
@@ -284,7 +334,7 @@ int main()
 	if (way <= MAXWAY)
 	{
 	   int MESI = L2cache[index][way].MESIbits;
-   	   // if this tag exists and is valid, if modified we serve, then invalidate
+   	   // serve if modified tag exists, then invalidate
 	   if (MESI == M || MESI == E || MESI == S)
            {
               hitCount++;
@@ -294,85 +344,27 @@ int main()
               updateLRU(index, way); 
               L2cache[index][way].address = addr;
            }
-           else
-              missCount++;    // if we don't have it, we do nothing
-        }
+           else // if we don't have it, do nothing
+              missCount++;         
+       }
       break;
-      // 8 clear the cache and refresh all states by stepping through all lines and ways
-      // No MESI, LRU, or counter updates here, and no display.
+      // 8 clear the cache entirely
       case 8:
-	for (index = 0; index <= MAXLINE; index++)
-        {
-           for (way = 0; way <= MAXWAY; way++)
-           {   
-               L2cache[index][way].MESIbits = I;
-               L2cache[index][way].LRUbits = way;
-           }
-	}         
+        setLRUbitsToWay();
       break;
-      // 9 print everything, destroy nothing
+      // 9 print the cache but change/destroy nothing
       case 9:
-	// Print contents of L2 cache in a pretty, pretty box to an output file
-
-        ofpD = fopen("display.txt", "a");
-
-	fprintf(ofpD,"------------------------------------------------------\n");
-	fprintf(ofpD,"At reference number %d, the L2 cache looked like this.\n\n",refCount);
-   fflush(ofpD);
-
-        for (index = 0; index <= MAXLINE; index++)
-        {
-           for (way = 0; way <= MAXWAY; way++)
-           {
-               if (L2cache[index][way].MESIbits != I)
-               {
-                  fprintf(ofpD,"Index %d way %d tag %d LRUbits %d MESIbits %d\n\n",index,way,L2cache[index][way].tag,L2cache[index][way].LRUbits,L2cache[index][way].MESIbits);
-   fflush(ofpD);
-               }
-           }
-        }
-
+        cacheDisplay();
         break;
-    // end switch statement
-    }
-  // print the counters in a neat form here at the end of each loop for testing
-
-  float hitRatio;
-  int total = hitCount + missCount;
-  hitRatio = (float) hitCount / total;
-
-  if ( n >= 0 && n < 8)
-  {
-  fprintf(ofp, "\ntag %d stored in index %d at way %d\n",tag,index,way);
-   fflush(ofp);
-  fprintf(ofp, "n address    hitCount missCount LRU: way0  way1 way2 way3 MESI  readCount writeCount hitRatio\n");
-   fflush(ofp);
-
-  fprintf(ofp, "%-1d 0x%-8x %-8d %-15d %-5d %-4d %-4d %-4d %-4d %-9d %-11d %-4f\n",
-           n, addr, hitCount, missCount, L2cache[index][0].LRUbits, L2cache[index][1].LRUbits, L2cache[index][2].LRUbits, L2cache[index][3].LRUbits, L2cache[index][way].MESIbits, readCount, writeCount, hitRatio);
-   fflush(ofp);
-
-  }
-  else if (n == 8)
-  {
-  fprintf(ofp, "the MESI bits of every line in this cache were set to invalid\n");
-   fflush(ofp);
-  }
-  else if (n == 9)
-  {
-  fprintf(ofp, "all valid lines with contents, LRU bits, and MESI bits in display.txt\n");
-   fflush(ofp);
-  }
-  fprintf(ofp,"--------------------------------------------------------------------------------------------------\n");
-   fflush(ofp);
-
-  // end while loop
-  }
+    } // end switch statement
+  } // end while loop
 
   float hitRatio = (float) hitCount / refCount;
   
-  printf(" Total References: %d\n Reads: %d\n Writes: %d\n Hits: %d\n Misses %d\n Hit ratio: %f\n",refCount,readCount,writeCount,hitCount,missCount,hitRatio);
+  printf(" Total References: %d\n Reads: %d\n Writes: %d\n Hits: %d\n"
+         " Misses %d\n Hit ratio: %f\n",refCount,readCount,writeCount,\
+         hitCount,missCount,hitRatio);
 
-  return 0; 
-// end of main() function
-}
+  return 0;
+
+} // end main()
