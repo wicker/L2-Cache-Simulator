@@ -21,11 +21,11 @@
 // WAYS is the total number of ways (columns) in that cache
 // MAXLINE and MAXWAY are LINES-- and WAYS-- respectively
 
-#define LINES 2
-#define WAYS 4
+#define LINES 16483
+#define WAYS 16
 
-#define MAXLINE 1
-#define MAXWAY 3
+#define MAXLINE 16482
+#define MAXWAY 5
 
 #define M 0
 #define E 1
@@ -146,20 +146,18 @@ void cacheDisplay()
    int way;
    ofp = fopen("display.txt", "a");
 
-   fprintf(ofp,"------------------------------------------\n");
-   fflush(ofp);
-
    for (index = 0; index <= MAXLINE; index++)
    {
-       fprintf(ofp,"INDEX: 0x%-8x\n",index);
-       fflush(ofp);
-
-       if (testIndex(index,way) == 0)
+      if (testIndex(index,way) == 0)
        {
-          for (way = 0; way <= MAXWAY; way++)
+
+           fprintf(ofp,"INDEX: 0x%-8x\n",index);
+           fflush(ofp);
+
+           for (way = 0; way <= MAXWAY; way++)
           {
              fprintf(ofp,"WAY %-8d LRU: %-4d MESI: %-10d TAG: %-8d"
-                          " ADDR: %-8d\n",
+                          " ADDR: 0x%-8x\n",
                           way,
                           L2cache[index][way].LRUbits,
                           L2cache[index][way].MESIbits,
@@ -169,6 +167,9 @@ void cacheDisplay()
           }
       }
    }
+
+   fprintf(ofp,"---------------------------------------------------------------------\n");
+   fflush(ofp);
 }
 
 int main()
@@ -195,6 +196,7 @@ int main()
   // open the tracefile, make it available to 'r' read
   // open the output file to make it available to append each iteration's result
   ifp = fopen("testfile.din", "r");
+  ofp = fopen("display.txt", "w");
 
   // set it up to read line by line, set n and addr accordingly
   while (fscanf(ifp, "%d %x\n", &n, &addr) != EOF) 
@@ -346,10 +348,16 @@ int main()
       break;
       // 8 clear the cache entirely
       case 8:
+        fprintf(ofp,"Reference %d called for the cache to be reset. No ways are valid.\n"
+                    "---------------------------------------------------------------------\n",
+                    refCount);
+        fflush(ofp);
         setLRUbitsToWay();
       break;
       // 9 print the cache but change/destroy nothing
       case 9:
+        fprintf(ofp,"Reference %d displayed only indices containing valid ways.\n",refCount);
+        fflush(ofp);
         cacheDisplay();
         break;
     } // end switch statement
@@ -358,8 +366,10 @@ int main()
   float hitRatio = (float) hitCount / refCount;
   
   printf(" Total References: %d\n Reads: %d\n Writes: %d\n Hits: %d\n"
-         " Misses %d\n Hit ratio: %f\n",refCount,readCount,writeCount,\
-         hitCount,missCount,hitRatio);
+         " Misses %d\n Hit ratio: %f\n"
+         "---------------------------------------------------------------------\n",
+         refCount,readCount,writeCount,hitCount,missCount,hitRatio);
+  fflush(ofp);
 
   return 0;
 
