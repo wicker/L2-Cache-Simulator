@@ -6,11 +6,9 @@ behavior of a write-allocate, MESI protocol, four-way set associative L2 cache
 with 4K lines of 64 bytes data each. 
 
 Our C program was tested by running a text file containing lines of the type
-  'n address'
-where 
-  'n' could be 0-9 and indicated the desired operation type
-and
-  'address' was some 32-bit address.
+n address
+where 'n' could be 0-9 and indicated the desired operation type
+  and 'address' was some 32-bit address.
 
 Our demo program was successful for all tests except ensuring cache coherency.
 We designed the algorithm for each operation, designed testcase files (see the 
@@ -25,40 +23,13 @@ found in original.c in this repo.
 ########################## Part 2: extensibility ##############################
 
 I felt that the quality of the code, especially after last-minute fixes, could
-be improved. Our prof challenged me to improve extensibility so that it would 
-take less than fifteen minutes to change the size (number of lines) or set 
-associativity (direct-mapped, fully associative).
+be improved. I also wanted to improve extensibility so that it would take less
+than fifteen minutes to change the size (number of lines) or set associativity
+(direct-mapped, fully associative).
 
 I have permission from my teammates to take this code, improve on it, and make
-it available at http://github.com/wicker/l2cache/ under the MIT license.
+it available at http://github.com/wicker/l2cache/
 
 Author: Jen Hanni (wicker)
 
-initialCacheDisplay() displays all the contents of all ways in every index.
-
-cacheDisplay() will display the contents of all ways in an index if any
-way in that index has been modified.
-
-######################### MIT License #########################################
-
-Copyright (c) 2011 Jen "wicker" Hanni, http://wickerbox.net/
-
-Permission is hereby granted, free of charge, to any person obtaining
-a copy of this software and associated documentation files (the
-"Software"), to deal in the Software without restriction, including
-without limitation the rights to use, copy, modify, merge, publish,
-distribute, sublicense, and/or sell copies of the Software, and to
-permit persons to whom the Software is furnished to do so, subject to
-the following conditions:
-
-The above copyright notice and this permission notice shall be
-included in all copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
-EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
-MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
-NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
-LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
-OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
-WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
