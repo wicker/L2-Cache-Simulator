@@ -19,11 +19,10 @@
 // only change these lines when changing total size of the cache! 
 // LINES is the total number of lines (16384 for a 16K line cache)
 // WAYS is the total number of ways (columns) in that cache
+// MAXLINE and MAXWAY are LINES-- and WAYS-- respectively
 
 #define LINES 2
 #define WAYS 4
-
-// MAXLINE and MAXWAY are LINES-- and WAYS-- respectively
 
 #define MAXLINE 1
 #define MAXWAY 3
@@ -45,7 +44,7 @@ typedef struct
 // creates the single global cache
 cacheLine L2cache[LINES][WAYS];
 
-FILE *ifp,*ofpD,*ofp;
+FILE *ifp,*ofp;
 
 // step through the cache and set initial values
 // LRU bit will be the same value as the way
@@ -145,28 +144,28 @@ void cacheDisplay()
 {
    int index;
    int way;
-   ofpD = fopen("display.txt", "a");
+   ofp = fopen("display.txt", "a");
 
-   fprintf(ofpD,"------------------------------------------\n");
-   fflush(ofpD);
+   fprintf(ofp,"------------------------------------------\n");
+   fflush(ofp);
 
    for (index = 0; index <= MAXLINE; index++)
    {
-       fprintf(ofpD,"INDEX: 0x%-8x\n",index);
-       fflush(ofpD);
+       fprintf(ofp,"INDEX: 0x%-8x\n",index);
+       fflush(ofp);
 
        if (testIndex(index,way) == 0)
        {
           for (way = 0; way <= MAXWAY; way++)
           {
-             fprintf(ofpD,"WAY %-8d LRU: %-4d MESI: %-10d TAG: %-8d"
+             fprintf(ofp,"WAY %-8d LRU: %-4d MESI: %-10d TAG: %-8d"
                           " ADDR: %-8d\n",
                           way,
                           L2cache[index][way].LRUbits,
                           L2cache[index][way].MESIbits,
                           L2cache[index][way].tag,
                           L2cache[index][way].address);
-             fflush(ofpD);
+             fflush(ofp);
           }
       }
    }
@@ -196,7 +195,6 @@ int main()
   // open the tracefile, make it available to 'r' read
   // open the output file to make it available to append each iteration's result
   ifp = fopen("testfile.din", "r");
-  ofp = fopen("testout.txt", "a");
 
   // set it up to read line by line, set n and addr accordingly
   while (fscanf(ifp, "%d %x\n", &n, &addr) != EOF) 
