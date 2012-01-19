@@ -8,8 +8,7 @@ with 4K lines of 64 bytes data each.
 Our C program was tested by running a text file containing lines of the type
   'n address'
 where 
-  'n' could be 0-9 and indicated the desired operation type
-and
+  'n' could be 0-9 and indicated the desired operation type and
   'address' was some 32-bit address.
 
 Our demo program was successful for all tests except ensuring cache coherency.
@@ -34,10 +33,11 @@ it available at http://github.com/wicker/l2cache/ under the MIT license.
 
 Author: Jen Hanni (wicker)
 
-initialCacheDisplay() displays all the contents of all ways in every index.
+The original file (original.c) had 646 lines, used while loops, assumed a four-way cache and so specified 0-3 for all functions that checked all ways in an index, haphazardly included DRAM and L1 printf access notes but not in all cases and not for any functional purpose, repeated lines of code instead of just calling a function, and failed on cache coherency.
 
-cacheDisplay() will display the contents of all ways in an index if any
-way in that index has been modified.
+The final revised version (main.c) has 377 lines, uses for loops, uses a global variable to set cache size and can thus be used to simulate a direct mapped or x-way set associative cache, contains no DRAM or L1 printf access notes as they were outside the scope of the simulation, uses functions where appropriate, has an overhauled LRU algorithm, and makes use only of a single output file for the display.
+
+The final cache simulator still fails on cache coherency but you can't have everything you want in life. 
 
 ######################### MIT License #########################################
 
