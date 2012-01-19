@@ -39,6 +39,25 @@ The final revised version (main.c) has 377 lines, uses for loops, uses a global 
 
 The final cache simulator still fails on cache coherency but you can't have everything you want in life. 
 
+######################### Instructions ########################################
+
+To run this cache, you will need the following files:
+
+main.c - contains the program itself
+tesfile.din - the list of 'n' 'address' inputs
+Makefile - for ease of removing and compiling files during test
+run - 
+
+Download these four files into one directory and cd to that directory.
+
+Give the script 'run' permission to do so: 'chmod u+x run'
+
+Run the script: ./run
+
+main.c will take in the testfile.din and printf the stats of the entire run.
+
+It will also generate a display.txt on every iteration where n = 9. This will display everything in the cache but make no changes. The cache will be reset on every iteration where n = 8.
+
 ######################### MIT License #########################################
 
 Copyright (c) 2011 Jen "wicker" Hanni, http://wickerbox.net/
